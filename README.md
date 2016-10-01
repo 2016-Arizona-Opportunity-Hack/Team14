@@ -7,6 +7,6 @@ Requisites:
 - Maven
 
 Steps:
-1. > Import the MAVEN project
-2. > mvn clean install
-3. > Run the program
+- Import the MAVEN project
+- mvn clean install
+- Run the program
