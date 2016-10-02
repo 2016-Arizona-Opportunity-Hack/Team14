@@ -16,7 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.Popup;
+import utility.DatabaseConnection;
 import utility.EmailMessageAdapter;
 import utility.TextMessageAdapter;
 
@@ -33,16 +33,21 @@ public class VolunteerModule extends Application {
   PasswordField emailPasswordTextField;
   TextField subjectField;
   TextField fromField;
-  Popup popup;
 
   public void start(Stage primaryStage) throws Exception {
 
     BorderPane volunteerApplicationPane = new BorderPane();
 
+    ArrayList<String> volunteerNameList = DatabaseConnection.getVolunteerName();
+    ArrayList<String> volunteerEmailList = DatabaseConnection.volunteerEmailList();
+    ArrayList<String> volunteerPhoneList = DatabaseConnection.volunteerPhoneList();
+    ArrayList<String> donorEmailList = DatabaseConnection.donorEmailList();
+    ArrayList<String> donorPhoneList = DatabaseConnection.donorPhoneList();
+
     volunteerApplicationPane.setTop(broadcastTitleAndTextBox());
     volunteerApplicationPane.setBottom(sendBroadCastsBox());
-    volunteerApplicationPane.setLeft(checkListWrapperBox());
-    volunteerApplicationPane.setRight(groupsWrapperGridBox());
+    volunteerApplicationPane.setLeft(checkListWrapperBox(volunteerNameList));
+    volunteerApplicationPane.setRight(groupsWrapperGridBox(volunteerEmailList));
 
     primaryStage.setTitle("MILK VOLUNTEER SYSTEM");
     Scene scene = new Scene(volunteerApplicationPane, 700, 400);
@@ -51,7 +56,7 @@ public class VolunteerModule extends Application {
     volunteerApplicationPane.requestFocus();
   }
 
-  private VBox groupsWrapperGridBox() {
+  private VBox groupsWrapperGridBox(ArrayList<String> volunteerEmailList) {
 
     VBox emailMessageGridBox = new VBox();
     emailMessageGridBox.setPrefWidth(400);
@@ -118,7 +123,7 @@ public class VolunteerModule extends Application {
     return emailMessageGridBox;
   }
 
-  private ScrollPane checkListWrapperBox() {
+  private ScrollPane checkListWrapperBox(ArrayList<String> volunteerNameList) {
 
     VBox checkListWrapperBox = new VBox();
     checkListWrapperBox.setPadding(new Insets(10));
