@@ -1,15 +1,12 @@
 package Volunteer;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -39,7 +36,7 @@ public class VolunteerModule extends Application {
     volunteerApplicationPane.setTop(broadcastTitleAndTextBox());
     volunteerApplicationPane.setBottom(sendBroadCastsBox());
     volunteerApplicationPane.setLeft(checkListWrapperBox());
-    volunteerApplicationPane.setRight(platformsWrapperGridBox());
+    volunteerApplicationPane.setRight(groupsWrapperGridBox());
 
     primaryStage.setTitle("MILK VOLUNTEER SYSTEM");
     Scene scene = new Scene(volunteerApplicationPane, 700, 400);
@@ -48,7 +45,43 @@ public class VolunteerModule extends Application {
     volunteerApplicationPane.requestFocus();
   }
 
-  private GridPane platformsWrapperGridBox() {
+  private VBox groupsWrapperGridBox() {
+
+    VBox emailMessageGridBox = new VBox();
+    emailMessageGridBox.setPrefWidth(400);
+
+    VBox subjectVBox = new VBox();
+    HBox emailHBox = new HBox();
+    emailHBox.setPrefWidth(400);
+    emailHBox.setPadding(new Insets(10));
+    emailHBox.setSpacing(5);
+    Label subjectLabel = new Label("SUBJECT: ");
+    TextField subjectField = new TextField();
+    subjectField.setPrefWidth(268);
+    subjectField.setPromptText("Enter subject here");
+    emailHBox.getChildren().addAll(subjectLabel, subjectField);
+
+    HBox emailAndPassHBox = new HBox();
+    emailAndPassHBox.setPrefWidth(400);
+    emailAndPassHBox.setPadding(new Insets(10));
+    emailAndPassHBox.setSpacing(5);
+    TextField emailAddressTextField = new TextField();
+    emailAddressTextField.setPromptText("Enter email address");
+    PasswordField emailPasswordTextField = new PasswordField();
+    emailPasswordTextField.setPromptText("Enter Password");
+    emailAndPassHBox.getChildren().addAll(emailAddressTextField, emailPasswordTextField);
+
+    subjectVBox.getChildren().addAll(emailHBox, emailAndPassHBox);
+
+    HBox textMessageHBox = new HBox();
+    textMessageHBox.setPrefWidth(400);
+    textMessageHBox.setPadding(new Insets(10));
+    textMessageHBox.setSpacing(5);
+    Label fromLabel = new Label("SENDER: ");
+    TextField fromField = new TextField();
+    fromField.setPromptText("Enter number here");
+    textMessageHBox.getChildren().addAll(fromLabel, fromField);
+
     GridPane platformsWrapperGridPane = new GridPane();
 
     platformsWrapperGridPane.setHgap(10);
@@ -70,7 +103,12 @@ public class VolunteerModule extends Application {
     CheckBox otherBox = new CheckBox("Others");
     platformsWrapperGridPane.add(otherBox, 1, 1);
 
-    return platformsWrapperGridPane;
+    CheckBox allBox = new CheckBox("All Volunteers");
+    platformsWrapperGridPane.add(allBox, 0, 2);
+
+    emailMessageGridBox.getChildren().addAll(subjectVBox, textMessageHBox, platformsWrapperGridPane);
+
+    return emailMessageGridBox;
   }
 
   private ScrollPane checkListWrapperBox() {
@@ -138,7 +176,6 @@ public class VolunteerModule extends Application {
     ArrayList<String> toNums = new ArrayList<String>();
     toNums.add("14802269800");
     String from = "12015834652";
-//    String from = "12015834652";
     TextMessageAdapter text = new TextMessageAdapter(toNums, from, message);
     text.sendText();
   }
