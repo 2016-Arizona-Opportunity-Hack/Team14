@@ -1,6 +1,8 @@
 package Volunteer;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -18,6 +20,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import utility.EmailMessageAdapter;
+import utility.TextMessageAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,8 @@ import java.util.List;
  * Created by nikoo28 on 10/1/16.
  */
 public class VolunteerModule extends Application {
+	
+	TextArea broadCastMessageTextArea;
 
   public void start(Stage primaryStage) throws Exception {
 
@@ -107,6 +113,34 @@ public class VolunteerModule extends Application {
 
     Button submitButton = new Button("SUBMIT");
     submitButton.setPrefSize(100, 20);
+    submitButton.setOnAction(new EventHandler<ActionEvent>() {
+    	
+    	public void handle(ActionEvent event) {
+    		System.out.println("SUBMITTED!!");
+            
+    		if (broadCastMessageTextArea.getText() != "") {
+    			// Create Text Message 
+          	  	ArrayList<String> toNums = new ArrayList<String>();
+          	  	toNums.add("14802269800");
+          	  	String from = "12015834652";
+          	  	String message = broadCastMessageTextArea.getText();
+          	  	TextMessageAdapter text = new TextMessageAdapter(toNums, from, message);
+          	  	// Create Email Message
+          	  	String senderEmail = "calebaripley@gmail.com";
+          	  	String senderPassword = "youxinxin";
+          	  	String subject = "WHATS UP!";
+          	  	ArrayList<String> toEmails = new ArrayList<String>();
+          	  	toEmails.add("calebaripley@gmail.com");
+          	  	EmailMessageAdapter email = new EmailMessageAdapter(senderEmail, senderPassword, toEmails, subject, message);
+          	  	// Send
+          	  	text.sendText();
+          	  	email.sendEmail();
+          	  	
+          	  	broadCastMessageTextArea.clear();
+    		}
+        }
+    });
+    
     sendBroadCastBox.getChildren().add(submitButton);
 
     return sendBroadCastBox;
@@ -122,7 +156,7 @@ public class VolunteerModule extends Application {
     broadcastMessageTitle.setFont(Font.font("Arial", FontWeight.BOLD, 14));
     broadcastMessageTitle.setFill(Color.WHITE);
 
-    TextArea broadCastMessageTextArea = new TextArea();
+    broadCastMessageTextArea = new TextArea();
     broadCastMessageTextArea.setPrefSize(800, 50);
     bannerVerticalWrapper.getChildren().addAll(broadcastMessageTitle, broadCastMessageTextArea);
 

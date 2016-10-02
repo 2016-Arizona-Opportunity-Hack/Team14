@@ -13,15 +13,15 @@ public class SampleConnection {
 
     System.out.println("hello");
     System.out.println(System.currentTimeMillis());
-    Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-
-    Connection conn = DriverManager.getConnection(
-        "jdbc:ucanaccess://C:\\Users\\Anshuman\\Documents\\Database1.accdb");
-    Statement s = conn.createStatement();
-    ResultSet rs = s.executeQuery("SELECT [Nayme] FROM [temptable]");
-    while (rs.next()) {
-      System.out.println(rs.getString(1));
-    }
+//    Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+//
+//    Connection conn = DriverManager.getConnection(
+//        "jdbc:ucanaccess://C:\\Users\\Anshuman\\Documents\\Database1.accdb");
+//    Statement s = conn.createStatement();
+//    ResultSet rs = s.executeQuery("SELECT [Nayme] FROM [temptable]");
+//    while (rs.next()) {
+//      System.out.println(rs.getString(1));
+//    }
 
   }
 }
