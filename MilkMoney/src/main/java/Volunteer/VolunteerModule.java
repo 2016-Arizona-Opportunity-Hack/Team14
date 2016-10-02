@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.Popup;
 import utility.EmailMessageAdapter;
 import utility.TextMessageAdapter;
 
@@ -28,6 +29,11 @@ import java.util.List;
 public class VolunteerModule extends Application {
 
   TextArea broadCastMessageTextArea;
+  TextField emailAddressTextField;
+  PasswordField emailPasswordTextField;
+  TextField subjectField;
+  TextField fromField;
+  Popup popup;
 
   public void start(Stage primaryStage) throws Exception {
 
@@ -56,7 +62,7 @@ public class VolunteerModule extends Application {
     emailHBox.setPadding(new Insets(10));
     emailHBox.setSpacing(5);
     Label subjectLabel = new Label("SUBJECT: ");
-    TextField subjectField = new TextField();
+    subjectField = new TextField();
     subjectField.setPrefWidth(268);
     subjectField.setPromptText("Enter subject here");
     emailHBox.getChildren().addAll(subjectLabel, subjectField);
@@ -65,9 +71,9 @@ public class VolunteerModule extends Application {
     emailAndPassHBox.setPrefWidth(400);
     emailAndPassHBox.setPadding(new Insets(10));
     emailAndPassHBox.setSpacing(5);
-    TextField emailAddressTextField = new TextField();
+    emailAddressTextField = new TextField();
     emailAddressTextField.setPromptText("Enter email address");
-    PasswordField emailPasswordTextField = new PasswordField();
+    emailPasswordTextField = new PasswordField();
     emailPasswordTextField.setPromptText("Enter Password");
     emailAndPassHBox.getChildren().addAll(emailAddressTextField, emailPasswordTextField);
 
@@ -77,9 +83,10 @@ public class VolunteerModule extends Application {
     textMessageHBox.setPrefWidth(400);
     textMessageHBox.setPadding(new Insets(10));
     textMessageHBox.setSpacing(5);
-    Label fromLabel = new Label("SENDER: ");
-    TextField fromField = new TextField();
+    Label fromLabel = new Label("PHONE NUMBER: ");
+    fromField = new TextField();
     fromField.setPromptText("Enter number here");
+    fromField.setText("12015834652");
     textMessageHBox.getChildren().addAll(fromLabel, fromField);
 
     GridPane platformsWrapperGridPane = new GridPane();
@@ -148,20 +155,27 @@ public class VolunteerModule extends Application {
     sendBroadCastBox.setPadding(new Insets(20));
     sendBroadCastBox.setSpacing(10);
 
-    Button submitButton = new Button("SUBMIT");
+    Button submitButton = new Button("SEND");
     submitButton.setPrefSize(100, 20);
     submitButton.setOnAction(new EventHandler<ActionEvent>() {
 
       public void handle(ActionEvent event) {
-        System.out.println("SUBMITTED!!");
+//        System.out.println("SUBMITTED!!");
 
         if (broadCastMessageTextArea.getText() != "") {
           // Create Text Message
 
           String message = broadCastMessageTextArea.getText();
-          sendEmails(message);
-          sendTextMessages(message);
+          String emailAddress = emailAddressTextField.getText();
+          String emailPassword = emailPasswordTextField.getText();
+          String subject = subjectField.getText();
+          String from = fromField.getText();
+          sendEmails(emailAddress, emailPassword, subject, message);
+          sendTextMessages(from, subject, message);
           broadCastMessageTextArea.clear();
+
+          // Pop up to confirm message was sent
+
         }
       }
     });
@@ -171,24 +185,23 @@ public class VolunteerModule extends Application {
     return sendBroadCastBox;
   }
 
-  private void sendTextMessages(String message) {
+  private void sendTextMessages(String from, String subject, String message) {
 
     ArrayList<String> toNums = new ArrayList<String>();
     toNums.add("14802269800");
-    String from = "12015834652";
-    TextMessageAdapter text = new TextMessageAdapter(toNums, from, message);
+//    String from = "12015834652";
+    TextMessageAdapter text = new TextMessageAdapter(toNums, from, subject + ": " + message);
     text.sendText();
   }
 
-  private void sendEmails(String message) {
+  private void sendEmails(String emailAddress, String pass, String subject, String message) {
 
     // Create Email Message
-    String senderEmail = "milkmoneyone@gmail.com";
-    String senderPassword = "milkmoney1";
-    String subject = "WHATS UP!";
+//    String senderEmail = "milkmoneyone@gmail.com";
+//    String senderPassword = "milkmoney1";
     ArrayList<String> toEmails = new ArrayList<String>();
     toEmails.add("calebaripley@gmail.com");
-    EmailMessageAdapter email = new EmailMessageAdapter(senderEmail, senderPassword, toEmails, subject, message);
+    EmailMessageAdapter email = new EmailMessageAdapter(emailAddress, pass, toEmails, subject, message);
     email.sendEmail();
 
   }
@@ -199,7 +212,7 @@ public class VolunteerModule extends Application {
     bannerVerticalWrapper.setPadding(new Insets(2));
     bannerVerticalWrapper.setSpacing(10);
 
-    Text broadcastMessageTitle = new Text("ENTER BROADCAST MESSAGE");
+    Text broadcastMessageTitle = new Text("ENTER YOUR MESSAGE");
     broadcastMessageTitle.setFont(Font.font("Arial", FontWeight.BOLD, 14));
     broadcastMessageTitle.setFill(Color.WHITE);
 
