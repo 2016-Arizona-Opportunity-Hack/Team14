@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class EmailMessageAdapter {
 	
     private final String EMAIL_SMTP_SERVER = "smtp.gmail.com";
-    private final String EMAIL_SERVER_PORT = "587";
+    private final String EMAIL_SERVER_PORT = "465";
     
     private String senderEmail;
     private String senderPassword;
@@ -46,6 +46,7 @@ public class EmailMessageAdapter {
         props.put("mail.smtp.port", EMAIL_SERVER_PORT);
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.socketFactory.fallback", "true");
         props.put("mail.smtp.socketFactory.port", EMAIL_SERVER_PORT);
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 

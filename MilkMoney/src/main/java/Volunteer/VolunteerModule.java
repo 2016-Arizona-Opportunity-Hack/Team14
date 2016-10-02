@@ -30,7 +30,7 @@ import java.util.List;
  * Created by nikoo28 on 10/1/16.
  */
 public class VolunteerModule extends Application {
-	
+
 	TextArea broadCastMessageTextArea;
 
   public void start(Stage primaryStage) throws Exception {
@@ -114,12 +114,12 @@ public class VolunteerModule extends Application {
     Button submitButton = new Button("SUBMIT");
     submitButton.setPrefSize(100, 20);
     submitButton.setOnAction(new EventHandler<ActionEvent>() {
-    	
+
     	public void handle(ActionEvent event) {
     		System.out.println("SUBMITTED!!");
-            
+
     		if (broadCastMessageTextArea.getText() != "") {
-    			// Create Text Message 
+    			// Create Text Message
           	  	ArrayList<String> toNums = new ArrayList<String>();
           	  	toNums.add("14802269800");
           	  	String from = "12015834652";
@@ -135,12 +135,12 @@ public class VolunteerModule extends Application {
           	  	// Send
           	  	text.sendText();
           	  	email.sendEmail();
-          	  	
+
           	  	broadCastMessageTextArea.clear();
     		}
         }
     });
-    
+
     sendBroadCastBox.getChildren().add(submitButton);
 
     return sendBroadCastBox;
