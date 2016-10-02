@@ -5,7 +5,6 @@ import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -31,7 +30,7 @@ import java.util.List;
  */
 public class VolunteerModule extends Application {
 
-	TextArea broadCastMessageTextArea;
+  TextArea broadCastMessageTextArea;
 
   public void start(Stage primaryStage) throws Exception {
 
@@ -115,35 +114,45 @@ public class VolunteerModule extends Application {
     submitButton.setPrefSize(100, 20);
     submitButton.setOnAction(new EventHandler<ActionEvent>() {
 
-    	public void handle(ActionEvent event) {
-    		System.out.println("SUBMITTED!!");
+      public void handle(ActionEvent event) {
+        System.out.println("SUBMITTED!!");
 
-    		if (broadCastMessageTextArea.getText() != "") {
-    			// Create Text Message
-          	  	ArrayList<String> toNums = new ArrayList<String>();
-          	  	toNums.add("14802269800");
-          	  	String from = "12015834652";
-          	  	String message = broadCastMessageTextArea.getText();
-          	  	TextMessageAdapter text = new TextMessageAdapter(toNums, from, message);
-          	  	// Create Email Message
-          	  	String senderEmail = "calebaripley@gmail.com";
-          	  	String senderPassword = "youxinxin";
-          	  	String subject = "WHATS UP!";
-          	  	ArrayList<String> toEmails = new ArrayList<String>();
-          	  	toEmails.add("calebaripley@gmail.com");
-          	  	EmailMessageAdapter email = new EmailMessageAdapter(senderEmail, senderPassword, toEmails, subject, message);
-          	  	// Send
-          	  	text.sendText();
-          	  	email.sendEmail();
+        if (broadCastMessageTextArea.getText() != "") {
+          // Create Text Message
 
-          	  	broadCastMessageTextArea.clear();
-    		}
+          String message = broadCastMessageTextArea.getText();
+          sendEmails(message);
+          sendTextMessages(message);
+          broadCastMessageTextArea.clear();
         }
+      }
     });
 
     sendBroadCastBox.getChildren().add(submitButton);
 
     return sendBroadCastBox;
+  }
+
+  private void sendTextMessages(String message) {
+
+    ArrayList<String> toNums = new ArrayList<String>();
+    toNums.add("14802269800");
+    String from = "12015834652";
+    TextMessageAdapter text = new TextMessageAdapter(toNums, from, message);
+    text.sendText();
+  }
+
+  private void sendEmails(String message) {
+
+    // Create Email Message
+    String senderEmail = "calebaripley@gmail.com";
+    String senderPassword = "youxinxin";
+    String subject = "WHATS UP!";
+    ArrayList<String> toEmails = new ArrayList<String>();
+    toEmails.add("calebaripley@gmail.com");
+    EmailMessageAdapter email = new EmailMessageAdapter(senderEmail, senderPassword, toEmails, subject, message);
+    email.sendEmail();
+
   }
 
   public HBox broadcastTitleAndTextBox() {
