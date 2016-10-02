@@ -63,7 +63,7 @@ public class EmailMessageAdapter {
         msg.addRecipient(Message.RecipientType.TO,
             new InternetAddress(receiverEmails.get(i)));
         Transport.send(msg);
-        System.out.println("MESSAGE " + (i + 1) + " SENT");
+        System.out.println("EMAIL " + (i + 1) + " SENT");
       } catch (Exception ex) {
         System.err.println("Error occurred while sending.");
         ex.printStackTrace();

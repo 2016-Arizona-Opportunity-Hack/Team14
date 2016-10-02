@@ -145,8 +145,8 @@ public class VolunteerModule extends Application {
   private void sendEmails(String message) {
 
     // Create Email Message
-    String senderEmail = "calebaripley@gmail.com";
-    String senderPassword = "youxinxin";
+    String senderEmail = "milkmoneyone@gmail.com";
+    String senderPassword = "milkmoney1";
     String subject = "WHATS UP!";
     ArrayList<String> toEmails = new ArrayList<String>();
     toEmails.add("calebaripley@gmail.com");
