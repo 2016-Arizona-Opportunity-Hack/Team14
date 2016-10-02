@@ -118,7 +118,7 @@ public class VolunteerModule extends Application {
     bannerVerticalWrapper.setPadding(new Insets(2));
     bannerVerticalWrapper.setSpacing(10);
 
-    Text broadcastMessageTitle = new Text("Enter broadcast message");
+    Text broadcastMessageTitle = new Text("ENTER BROADCAST MESSAGE");
     broadcastMessageTitle.setFont(Font.font("Arial", FontWeight.BOLD, 14));
     broadcastMessageTitle.setFill(Color.WHITE);
 
