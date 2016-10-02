@@ -138,6 +138,7 @@ public class VolunteerModule extends Application {
     ArrayList<String> toNums = new ArrayList<String>();
     toNums.add("14802269800");
     String from = "12015834652";
+//    String from = "12015834652";
     TextMessageAdapter text = new TextMessageAdapter(toNums, from, message);
     text.sendText();
   }

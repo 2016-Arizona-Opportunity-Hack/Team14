@@ -48,7 +48,7 @@ public class TextMessageAdapter {
 
       SmsSubmissionResult[] results = null;
       try {
-        results = client.submitMessage(message);
+        results = client.submitMessageHttps(message);
       } catch (Exception e) {
         System.err.println("Failed to communicate with the Nexmo Client");
         e.printStackTrace();
@@ -67,13 +67,14 @@ public class TextMessageAdapter {
         else
           System.out.println("SUBMISSION FAILED!");
         System.out.println("Message-Id [ " + results[j].getMessageId() + " ] ...");
-        System.out.println("Error-Text [ " + results[j].getErrorText() + " ] ...");
+//        System.out.println("Error-Text [ " + results[j].getErrorText() + " ] ...");
 
         if (results[j].getMessagePrice() != null)
           System.out.println("Message-Price [ " + results[j].getMessagePrice() + " ] ...");
         if (results[j].getRemainingBalance() != null)
           System.out.println("Remaining-Balance [ " + results[j].getRemainingBalance() + " ] ...");
       }
+
     }
   }
 
